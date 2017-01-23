@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Web.Models.School>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SchoolName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Province)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.county)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SchoolName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Province)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.county)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.SchoolID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.SchoolID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.SchoolID })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

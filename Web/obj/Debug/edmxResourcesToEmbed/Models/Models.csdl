@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="meijiaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="School">
+    <Key>
+      <PropertyRef Name="SchoolID" />
+    </Key>
+    <Property Name="SchoolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SchoolName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Province" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="county" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UID" />
+    </Key>
+    <Property Name="UID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LoginName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="UserType" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Tel" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Options" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Teams">
+    <Key>
+      <PropertyRef Name="TID" />
+      <PropertyRef Name="THeader" />
+    </Key>
+    <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="THeader" Type="Int32" Nullable="false" />
+    <Property Name="SchoolID" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="meijiaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="School" EntityType="Self.School" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <EntitySet Name="UserType" EntityType="Self.UserType" />
+    <EntitySet Name="Teams" EntityType="Self.Teams" />
+  </EntityContainer>
+</Schema>

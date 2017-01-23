@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="meijiaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="School">
+    <Key>
+      <PropertyRef Name="SchoolID" />
+    </Key>
+    <Property Name="SchoolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SchoolName" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Province" Type="nchar" MaxLength="50" />
+    <Property Name="City" Type="nchar" MaxLength="50" />
+    <Property Name="county" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“meijia.dbo.Teams”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="Teams">
+    <Key>
+      <PropertyRef Name="TID" />
+      <PropertyRef Name="THeader" />
+    </Key>
+    <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TName" Type="nchar" MaxLength="50" />
+    <Property Name="THeader" Type="int" Nullable="false" />
+    <Property Name="SchoolID" Type="int" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UID" />
+    </Key>
+    <Property Name="UID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LoginName" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="UserType" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tel" Type="nchar" MaxLength="20" />
+    <Property Name="SchoolID" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="TypeName" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Options" Type="nchar" MaxLength="500" />
+  </EntityType>
+  <EntityContainer Name="meijiaModelStoreContainer">
+    <EntitySet Name="School" EntityType="Self.School" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Teams" EntityType="Self.Teams" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Teams].[TID] AS [TID], 
+    [Teams].[TName] AS [TName], 
+    [Teams].[THeader] AS [THeader], 
+    [Teams].[SchoolID] AS [SchoolID]
+    FROM [dbo].[Teams] AS [Teams]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

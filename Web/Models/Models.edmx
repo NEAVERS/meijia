@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="meijiaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="SchoolID" />
+          </Key>
+          <Property Name="SchoolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SchoolName" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Province" Type="nchar" MaxLength="50" />
+          <Property Name="City" Type="nchar" MaxLength="50" />
+          <Property Name="county" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“meijia.dbo.Teams”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="TID" />
+            <PropertyRef Name="THeader" />
+          </Key>
+          <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TName" Type="nchar" MaxLength="50" />
+          <Property Name="THeader" Type="int" Nullable="false" />
+          <Property Name="SchoolID" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="UserType" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tel" Type="nchar" MaxLength="20" />
+          <Property Name="SchoolID" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Options" Type="nchar" MaxLength="500" />
+        </EntityType>
+        <EntityContainer Name="meijiaModelStoreContainer">
+          <EntitySet Name="School" EntityType="Self.School" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Teams].[TID] AS [TID], 
+    [Teams].[TName] AS [TName], 
+    [Teams].[THeader] AS [THeader], 
+    [Teams].[SchoolID] AS [SchoolID]
+    FROM [dbo].[Teams] AS [Teams]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="meijiaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="SchoolID" />
+          </Key>
+          <Property Name="SchoolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SchoolName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="county" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="UserType" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Tel" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Options" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="TID" />
+            <PropertyRef Name="THeader" />
+          </Key>
+          <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="THeader" Type="Int32" Nullable="false" />
+          <Property Name="SchoolID" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="meijiaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="School" EntityType="Self.School" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="meijiaModelStoreContainer" CdmEntityContainer="meijiaEntities">
+          <EntitySetMapping Name="School">
+            <EntityTypeMapping TypeName="meijiaModel.School">
+              <MappingFragment StoreEntitySet="School">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="county" ColumnName="county" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="meijiaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="meijiaModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserType">
+            <EntityTypeMapping TypeName="meijiaModel.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Options" ColumnName="Options" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="meijiaModel.Teams">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="TID" ColumnName="TID" />
+                <ScalarProperty Name="TName" ColumnName="TName" />
+                <ScalarProperty Name="THeader" ColumnName="THeader" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
