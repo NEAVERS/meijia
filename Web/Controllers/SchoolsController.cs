@@ -99,6 +99,7 @@ namespace Web.Controllers
             School school = db.School.Find(id);
             if (school == null)
             {
+                int i = 1;
                 return HttpNotFound();
             }
             return View(school);
